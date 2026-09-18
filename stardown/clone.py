@@ -21,7 +21,7 @@ def _run_git(args, timeout):
 
 
 def clone_or_update(repo, out_dir, use_ssh=False, shallow=True, timeout=300):
-    dest = Path(out_dir) / repo["full_name"]
+    dest = Path(out_dir) / repo["full_name"].rsplit("/", 1)[-1]
     dest.parent.mkdir(parents=True, exist_ok=True)
     if (dest / ".git").is_dir():
         # Already here from a previous run — fast-forward, don't re-clone.

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stardown"
-version = "0.6.0"
+version = "0.7.0"
 description = "StarDown (GitHub Starred Downloader) -- async fetch with rich live progress"
 readme = "README.md"
 requires-python = ">=3.11"

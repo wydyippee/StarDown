@@ -31,7 +31,8 @@ def _maybe_uvloop():
 
 
 def _paths(repo, out_dir):
-    dest = Path(out_dir) / repo["full_name"]
+    name = repo["full_name"].rsplit("/", 1)[-1]
+    dest = Path(out_dir) / name
     archive = dest.parent / (dest.name + ".tar.gz")
     part = archive.with_suffix(".tar.gz.part")
     done = dest / ".stardown-done"
@@ -75,7 +76,7 @@ async def _git(args, timeout):
 
 
 async def _git_one(repo, out_dir, sem, use_ssh, shallow, timeout):
-    dest = Path(out_dir) / repo["full_name"]
+    dest = Path(out_dir) / repo["full_name"].rsplit("/", 1)[-1]
     async with sem:
         if (dest / ".git").is_dir():
             await _git(["-C", str(dest), "pull", "--ff-only", "--quiet"], timeout)
