@@ -1,0 +1,33 @@
+# Publishes to PyPI on every GitHub Release. No tokens stored anywhere:
+# PyPI trusts this repo via OpenID Connect ("Trusted Publishing").
+#
+# One-time setup (5 min, all clicking):
+#   1. pypi.org → account → Publishing → "Add a pending publisher":
+#      owner wydyippee, repo StarDown, workflow publish.yml, environment pypi
+#   2. GitHub repo → Settings → Environments → New environment: pypi
+#      (no secrets needed — the workflow mints a short-lived token itself)
+# Then: draft a Release (tag v0.3.0) → merged to PyPI automatically.
+
+name: publish
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  pypi:
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install build
+      - run: python -m build
+      - uses: pypa/gh-action-pypi-publish@release/v1
