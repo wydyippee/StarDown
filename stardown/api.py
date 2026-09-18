@@ -15,7 +15,7 @@ API = "https://api.github.com"
 def _headers(token=None):
     headers = {
         "Accept": "application/vnd.github+json",
-        "User-Agent": "StarDown/0.3.0",
+        "User-Agent": "StarDown/0.6.0",
         "X-GitHub-Api-Version": "2022-11-28",
     }
     if token:
